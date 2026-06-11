@@ -8,7 +8,7 @@ public class Main{
         Scanner sc= new Scanner(System.in);
 
         while(true){
-            System.out.println("Enter your Choice: \n1.Add an Expense \n2.View Expenses \n3.Calculate Total \n4.Delete Expense \n5.Update \n6.Search - by Category \n7.Exit");
+            System.out.println("Enter your Choice: \n1.Add an Expense \n2.View Expenses \n3.Calculate Total \n4.Delete Expense \n5.Update \n6.Search - by Category \n7.Category Summary \n8.Exit");
             int choice=sc.nextInt();
             
             switch(choice){
@@ -68,6 +68,9 @@ public class Main{
                     manager.searchByCategory(category);
                     break;
                 case 7:
+                    manager.categorySummary();
+                    break;
+                case 8:
                     //System.exit(0);
                     return;
                 default:

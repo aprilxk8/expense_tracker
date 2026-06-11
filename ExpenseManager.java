@@ -4,6 +4,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.*;
 import java.time.LocalDate;
+import java.util.HashMap;
+
 
 public class ExpenseManager{
     private int nextId = 1;
@@ -128,6 +130,27 @@ public class ExpenseManager{
         }
         if(!found){
             System.out.println("No expenses found in this category.");
+        }
+    }
+
+    public void categorySummary(){
+        HashMap<String, Double> summary= new HashMap<>();
+        for (Expense e: expenses){
+            String categoryKey= e.getCategory();
+            // if (summary.containsKey(e.getCategory())){
+            //     summary.put(categoryKey, summary.get(categoryKey)+e.getAmount());
+            // }
+
+            // else{
+            //     summary.put(categoryKey, e.getAmount());
+            // }
+
+            summary.put(categoryKey, summary.getOrDefault(categoryKey, 0.0 +e.getAmount()));
+        }
+
+        for(String category: summary.keySet()){
+            System.out.println(category+" : "+summary.get(category));
+
         }
     }
 }
