@@ -117,4 +117,17 @@ public class ExpenseManager{
             System.out.println("No previous expenses found.");
         }
     }
+
+    public void searchByCategory(String category){
+        boolean found=false;
+        for(Expense e: expenses){
+            if (category.equalsIgnoreCase(e.getCategory())){
+                System.out.println(e);
+                found=true;
+            }
+        }
+        if(!found){
+            System.out.println("No expenses found in this category.");
+        }
+    }
 }
