@@ -43,7 +43,10 @@ public class Expense{
 
     @Override
     public String toString(){
-        return "Expense{"+ "id:"+id +", amount:"+amount +" ,category:"+category+ " ,description:"+description +" ,date:"+date +"}";
+        return String.format(
+            "%-5d %-10.2f %-12s %-15s %-12s",
+            id, amount, category, description, date
+        );
 
     }
 }

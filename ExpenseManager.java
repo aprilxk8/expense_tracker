@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.*;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Collections;
 
 
 public class ExpenseManager{
@@ -29,6 +30,13 @@ public class ExpenseManager{
             System.out.println("No expenses found.");
             return;
         }
+
+        
+        System.out.println("------------------------------------------------------------");
+        System.out.printf("%-5s %-10s %-12s %-15s %-12s%n",
+                "ID", "Amount", "Category", "Description", "Date");
+        System.out.println("------------------------------------------------------------");
+        
         for (Expense e: expenses){
             System.out.println(e);
         }
@@ -43,11 +51,14 @@ public class ExpenseManager{
                 break;
             }
         }
-        saveExpenses();
+        
         if(found){
+            saveExpenses();
             System.out.println("Expense deleted.");
+            System.out.println("------------------------------------------------------------");
         }else{
             System.out.println("Expense not found.");
+            System.out.println("------------------------------------------------------------");
         }
     }
 
@@ -58,13 +69,18 @@ public class ExpenseManager{
                 e.setAmount(amount);
                 e.setCategory(category);
                 e.setDescription(description);
+
+                saveExpenses();
                 System.out.println("Expense updated.");
+                System.out.println("------------------------------------------------------------");
                 found=true;
+                break;
             }
         }
-        saveExpenses();
+        
         if (!found){
             System.out.println("Expense not found.");
+            System.out.println("------------------------------------------------------------");
         }
     }
 
@@ -122,8 +138,16 @@ public class ExpenseManager{
 
     public void searchByCategory(String category){
         boolean found=false;
+        
         for(Expense e: expenses){
             if (category.equalsIgnoreCase(e.getCategory())){
+                
+                if (!found) {
+                    System.out.println("Search Results- Category: "+category+" ");
+                    System.out.printf("%-5s %-10s %-12s %-15s %-12s%n",
+                "ID", "Amount", "Category", "Description", "Date");
+                    System.out.println("------------------------------------------------------------");
+                }
                 System.out.println(e);
                 found=true;
             }
@@ -131,9 +155,15 @@ public class ExpenseManager{
         if(!found){
             System.out.println("No expenses found in this category.");
         }
+        System.out.println("------------------------------------------------------------");
     }
 
     public void categorySummary(){
+        if(expenses.isEmpty()){
+            System.out.println("No expenses found.");
+            System.out.println("------------------------------------------------------------");
+            return;
+        }
         HashMap<String, Double> summary= new HashMap<>();
         for (Expense e: expenses){
             String categoryKey= e.getCategory();
@@ -145,12 +175,53 @@ public class ExpenseManager{
             //     summary.put(categoryKey, e.getAmount());
             // }
 
-            summary.put(categoryKey, summary.getOrDefault(categoryKey, 0.0 +e.getAmount()));
+            summary.put(
+                categoryKey,
+                summary.getOrDefault(categoryKey, 0.0)
+                    + e.getAmount()
+            );
         }
-
+        System.out.printf("%-10s %-12s", "Category" , "Total Expense\n");
         for(String category: summary.keySet()){
-            System.out.println(category+" : "+summary.get(category));
+            System.out.printf("%-15s %-15.2f%n", category, summary.get(category));
 
         }
+        System.out.println("------------------------------------------------------------");
+    }
+
+    public void sortByAmount(){
+        ArrayList<Expense> sortedExpenses= new ArrayList<>(expenses);
+        Collections.sort(sortedExpenses, (e1, e2)->
+            Double.compare(
+                e1.getAmount(), 
+                e2.getAmount()
+            )
+        );
+        System.out.println("------------------------------------------------------------");
+        System.out.printf("%-5s %-10s %-12s %-15s %-12s%n",
+                "ID", "Amount", "Category", "Description", "Date");
+        System.out.println("------------------------------------------------------------");
+        for (Expense exp: sortedExpenses){
+            System.out.println(exp);
+        }
+        
+        System.out.println("------------------------------------------------------------");
+    }
+
+    public void sortByDate(){
+        ArrayList<Expense> sortedListByDate=new ArrayList<>(expenses);
+        Collections.sort(sortedListByDate, (e1,e2)->
+            
+            e1.getDate().compareTo(e2.getDate())
+            
+        );
+        System.out.println("------------------------------------------------------------");
+        System.out.printf("%-5s %-10s %-12s %-15s %-12s%n",
+                "ID", "Amount", "Category", "Description", "Date");
+        System.out.println("------------------------------------------------------------");
+        for (Expense exp: sortedListByDate){
+            System.out.println(exp);
+        }
+        System.out.println("------------------------------------------------------------");
     }
 }
