@@ -224,4 +224,60 @@ public class ExpenseManager{
         }
         System.out.println("------------------------------------------------------------");
     }
+
+    public void expenseStatistics(){
+        if(expenses.isEmpty()){
+            System.out.println("No expenses found.");
+            return;
+        }
+        Expense highest=expenses.get(0);
+        Expense lowest=expenses.get(0);
+        double total=0;
+
+        for(Expense e: expenses){
+            total+=e.getAmount();
+            if(e.getAmount()>highest.getAmount()){
+                highest=e;
+            }
+            if(e.getAmount()<lowest.getAmount()){
+                lowest=e;
+            }
+
+        }
+
+        Double average= total/expenses.size();
+
+        System.out.println(
+            "------------------------------------------------------------"
+        );
+
+        System.out.println("EXPENSE STATISTICS");
+
+        System.out.println(
+            "------------------------------------------------------------"
+        );
+
+        System.out.println("Highest Expense:");
+        System.out.printf("%-5s %-10s %-12s %-15s %-12s%n",
+                "ID", "Amount", "Category", "Description", "Date");
+        System.out.println(highest);
+
+        System.out.println();
+
+        System.out.println("Lowest Expense:");
+        System.out.printf("%-5s %-10s %-12s %-15s %-12s%n",
+                "ID", "Amount", "Category", "Description", "Date");
+        System.out.println(lowest);
+
+        System.out.println();
+
+        System.out.printf(
+            "Average Expense: %.2f%n",
+            average
+        );
+
+        System.out.println(
+            "------------------------------------------------------------"
+        );
+    }
 }

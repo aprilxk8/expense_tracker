@@ -11,7 +11,7 @@ public class Main{
             System.out.println("------------------------------------------------------------");
             System.out.println("TRACK EXPENSES\t\t");
             System.out.println("------------------------------------------------------------");
-            System.out.println("1.Add an Expense \n2.View Expenses \n3.Calculate Total \n4.Delete Expense \n5.Update \n6.Search -by Category \n7.Category Summary \n8.Sort \n9.Exit");
+            System.out.println("1.Add an Expense \n2.View Expenses \n3.Calculate Total \n4.Delete Expense \n5.Update \n6.Search -by Category \n7.Category Summary \n8.Sort \n9.Expense Statistics \n10.Exit");
             System.out.println("------------------------------");
             int choice=sc.nextInt();
             System.out.println("------------------------------");
@@ -216,8 +216,12 @@ public class Main{
                     }
 
                     break;
-                    
+
+
                 case 9:
+                    manager.expenseStatistics();
+                    break;    
+                case 10:
                     //System.exit(0);
                     System.out.println("Exiting...");
                     System.out.println("------------------------------------------------------------");
